@@ -14,25 +14,30 @@ A Node.js/TypeScript web service that identifies and links customer contacts acr
 - **Runtime**: Node.js 18+
 - **Language**: TypeScript
 - **Framework**: Express
-- **Database**: SQLite (via Prisma) - easily swappable to PostgreSQL for production
+- **Database**: PostgreSQL (via Prisma)
 
-## Setup
+## Live API
+
+**Base URL:** `https://YOUR_APP_NAME.onrender.com` *(update after deployment)*
 
 ```bash
-# Install dependencies
+# Example: Create contact
+curl -X POST https://YOUR_APP_NAME.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"lorraine@hillvalley.edu","phoneNumber":"123456"}'
+```
+
+## Setup (Local Development)
+
+1. Get a free PostgreSQL database at [Neon](https://neon.tech) or run PostgreSQL locally.
+2. Copy `.env.example` to `.env` and set your `DATABASE_URL`.
+3. Run:
+
+```bash
 npm install
-
-# Generate Prisma client
 npm run db:generate
-
-# Run database migrations
-npm run db:migrate
-
-# Start development server (with hot reload)
+npm run db:push    # or: npm run db:migrate
 npm run dev
-
-# Or build and start production
-npm run build && npm start
 ```
 
 The server runs on `http://localhost:3000` by default. Set `PORT` env var to override.
@@ -117,12 +122,34 @@ model Contact {
 }
 ```
 
-## Deployment (e.g., Render.com)
+## Deployment (Render.com)
 
-1. Use **Web Service** type
-2. Build command: `npm install && npm run db:generate && npm run build`
-3. Start command: `npm start`
-4. For production, set `DATABASE_URL` to a PostgreSQL connection string and update `prisma/schema.prisma` datasource to `postgresql`
+### Option A: Blueprint (recommended)
+
+1. Push this repo to GitHub.
+2. Go to [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint**.
+3. Connect your GitHub repo and select it.
+4. Render will read `render.yaml` and create both the Web Service and PostgreSQL database.
+5. Click **Apply** to deploy.
+6. After deploy, copy your app URL (e.g. `https://bitespeed-identity-reconciliation.onrender.com`) and update the **Live API** section above.
+
+### Option B: Manual setup
+
+1. **Create PostgreSQL database**
+   - Render Dashboard → **New** → **PostgreSQL**
+   - Copy the **Internal Database URL** from the Connections tab.
+
+2. **Create Web Service**
+   - **New** → **Web Service**
+   - Connect your GitHub repo
+   - **Build Command:** `npm install && npx prisma generate && npm run build`
+   - **Start Command:** `npx prisma migrate deploy && npm start`
+   - **Environment:** Add `DATABASE_URL` = your PostgreSQL connection string
+   - Deploy
+
+3. Update the **Live API** section in this README with your deployed URL.
+
+> **Note:** Render free tier PostgreSQL expires after 90 days. The app may spin down after inactivity; first request may take ~30 seconds to wake up.
 
 ## License
 
