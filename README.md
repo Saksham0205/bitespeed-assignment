@@ -122,34 +122,24 @@ model Contact {
 }
 ```
 
-## Deployment (Render.com)
-
-### Option A: Blueprint (recommended)
-
-1. Push this repo to GitHub.
-2. Go to [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint**.
-3. Connect your GitHub repo and select it.
-4. Render will read `render.yaml` and create both the Web Service and PostgreSQL database.
-5. Click **Apply** to deploy.
-6. After deploy, copy your app URL (e.g. `https://bitespeed-identity-reconciliation.onrender.com`) and update the **Live API** section above.
-
-### Option B: Manual setup
+## Deployment (Render.com – Free Tier)
 
 1. **Create PostgreSQL database**
-   - Render Dashboard → **New** → **PostgreSQL**
-   - Copy the **Internal Database URL** from the Connections tab.
+   - [Render Dashboard](https://dashboard.render.com) → **New** → **PostgreSQL**
+   - Choose **Free** plan
+   - Copy the **Internal Database URL** from the Connections tab
 
 2. **Create Web Service**
    - **New** → **Web Service**
-   - Connect your GitHub repo
+   - Connect your GitHub repo and select this project
    - **Build Command:** `npm install && npx prisma generate && npm run build`
    - **Start Command:** `npx prisma migrate deploy && npm start`
-   - **Environment:** Add `DATABASE_URL` = your PostgreSQL connection string
-   - Deploy
+   - **Environment:** Add `DATABASE_URL` = paste your PostgreSQL connection string
+   - Click **Create Web Service**
 
-3. Update the **Live API** section in this README with your deployed URL.
+3. After deploy, copy your app URL and update the **Live API** section above.
 
-> **Note:** Render free tier PostgreSQL expires after 90 days. The app may spin down after inactivity; first request may take ~30 seconds to wake up.
+> **Note:** Free tier PostgreSQL expires after 90 days. The app may spin down after inactivity; the first request may take ~30 seconds to wake up.
 
 ## License
 
