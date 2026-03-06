@@ -18,11 +18,11 @@ A Node.js/TypeScript web service that identifies and links customer contacts acr
 
 ## Live API
 
-**Base URL:** `https://YOUR_APP_NAME.onrender.com` *(update after deployment)*
+**Base URL:** `https://bitespeed-identity-reconciliation-api-vdxn.onrender.com`
 
 ```bash
 # Example: Create contact
-curl -X POST https://YOUR_APP_NAME.onrender.com/identify \
+curl -X POST https://bitespeed-identity-reconciliation-api-vdxn.onrender.com/identify \
   -H "Content-Type: application/json" \
   -d '{"email":"lorraine@hillvalley.edu","phoneNumber":"123456"}'
 ```
