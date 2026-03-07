@@ -122,25 +122,6 @@ model Contact {
 }
 ```
 
-## Deployment (Render.com – Free Tier)
-
-1. **Create PostgreSQL database**
-   - [Render Dashboard](https://dashboard.render.com) → **New** → **PostgreSQL**
-   - Choose **Free** plan
-   - Copy the **Internal Database URL** from the Connections tab
-
-2. **Create Web Service**
-   - **New** → **Web Service**
-   - Connect your GitHub repo and select this project
-   - **Build Command:** `npm install && npx prisma generate && npm run build`
-   - **Start Command:** `npx prisma migrate deploy && npm start`
-   - **Environment:** Add `DATABASE_URL` = paste your PostgreSQL connection string
-   - Click **Create Web Service**
-
-3. After deploy, copy your app URL and update the **Live API** section above.
-
-> **Note:** Free tier PostgreSQL expires after 90 days. The app may spin down after inactivity; the first request may take ~30 seconds to wake up.
-
 ## License
 
 MIT
